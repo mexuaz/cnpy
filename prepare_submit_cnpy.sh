@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# usage: prepare_submit_cpp.sh uk-2005 soc-LiveJournal1 ...
+# usage: prepare_submit_cnpy.sh uk-2005 soc-LiveJournal1 ...
 
 RPODIR="$HOME/cnpy"
 SRCDIR="$RPODIR"
@@ -33,18 +33,7 @@ cmake "$SRCDIR"
 make
 
 
-cd "$DATDIR"
-
-
-if [ $# -eq 0 ]; then
-    for arg in ${DATAST[*]}; do
-        $PROGRM "$arg.ser"
-    done
-else
-    for arg in "$@"; do
-        $PROGRM "$arg.ser"
-    done
-fi
+sbatch cnpy.sh
 
 
 
