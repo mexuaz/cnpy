@@ -1,0 +1,16 @@
+# cmake build folder from jetbrains
+cmake-build*/
+
+# cmake other files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+
+
+
+
+# ipython check points
+/.ipynb_checkpoints
+.idea
+
