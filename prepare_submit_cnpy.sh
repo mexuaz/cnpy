@@ -32,8 +32,8 @@ cd "$BINDIR"
 cmake "$SRCDIR"
 make
 
-
-sbatch cnpy.sh
+cd $SCRATCH
+sbatch "$SRCDIR/cnpy.sh"
 
 
 

@@ -21,11 +21,11 @@ cd "$DATDIR"
 if [ $# -eq 0 ]; then
     for arg in ${DATAST[*]}; do
 	echo "Converting $arg dataset to npy format ..."
-        $PROGRM "$arg.ser"
+        $PROGRM "$DATDIR/$arg.ser"
     done
 else
     for arg in "$@"; do
 	echo "Converting $arg dataset to npy format ..."
-        $PROGRM "$arg.ser"
+        $PROGRM "$DATDIR/$arg.ser"
     done
 fi
