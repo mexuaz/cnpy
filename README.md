@@ -11,6 +11,11 @@ The .npy file header takes care of specifying the size, shape, and data type of 
 
 Loading data written in numpy formats into C++ is equally simple, but requires you to type-cast the loaded data to the type of your choice.
 
+## Compute Canada 
+
+module load nixpkgs/16.09  intel/2019.3 boost/1.68.0 hdf5/1.10.5
+module load nixpkgs/16.09  gcc/7.3.0 boost/1.68.0  hdf5/1.10.3
+
 # Installation:
 
 Default installation directory is /usr/local. 

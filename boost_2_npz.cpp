@@ -2,7 +2,17 @@
 #include<iostream>
 #include <fstream>
 #include <vector>
+
+// Standard filesystem support
+#if __cplusplus >= 201703L // C++17 support is available
 #include <filesystem>
+namespace fs = std::filesystem;
+#else
+static_assert(__cplusplus >= 201402L, "C++14 at least is required.") // C++14 support
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#endif
+
 
 #include <boost/serialization/vector.hpp>
 #include <boost/archive/binary_iarchive.hpp>
