@@ -37,9 +37,19 @@ find_package( Boost 1.68.0 COMPONENTS system serialization REQUIRED )
 include_directories( ${Boost_INCLUDE_DIR} )
 
 
+# add hdf5 library
+
+find_package(HDF5 REQUIRED COMPONENTS C CXX)
+include_directories(${HDF5_INCLUDE_DIR})
+
+
 add_executable(example1 example1.cpp)
 target_link_libraries(example1 cnpy)
 
 add_executable(boost_2_npz boost_2_npz.cpp)
 target_link_libraries(boost_2_npz cnpy)
 target_link_libraries(boost_2_npz ${Boost_LIBRARIES})
+
+add_executable(boost_2_hdf5 boost_2_hdf5.cpp)
+target_link_libraries(boost_2_hdf5 ${Boost_LIBRARIES})
+target_link_libraries(boost_2_hdf5 ${HDF5_CXX_LIBRARIES} ${HDF5_LIBRARIES})

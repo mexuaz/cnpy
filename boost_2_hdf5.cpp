@@ -1,4 +1,7 @@
-#include"cnpy.h"
+#include "highfive/H5File.hpp"
+#include "highfive/H5DataSet.hpp"
+
+
 #include<iostream>
 #include <fstream>
 #include <vector>
@@ -7,6 +10,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+
 
 
 int main(int argc, char** argv)
@@ -20,7 +24,7 @@ int main(int argc, char** argv)
 
     std::filesystem::path inFile(argv[1]);
     std::filesystem::path outFile(argv[1]);
-    outFile.replace_extension(".npz");
+    outFile.replace_extension(".h5");
 
 
     std::ifstream ifs;
@@ -38,32 +42,22 @@ int main(int argc, char** argv)
     std::cout << "Number of edges: " << src.size() << std::endl;
     std::cout << "Reading input file took time: " << ts.count() << " sec" << std::endl;
 
-#if(0)
-    cnpy::npy_save("src.npy", src); // save single vector to file
-    cnpy::npy_save("src.npy", &src[0], {src.size()}); // save vector with shape
 
-    //load it into a new array
-    cnpy::NpyArray arr = cnpy::npy_load("arr1.npy");
-    EdgeCount* loaded_data = arr.data<EdgeCount>();
-    
-    //append the same data to file
-    //npy array on file now has shape (Nz+Nz,Ny,Nx)
-    cnpy::npy_save("arr1.npy", &src[0],{src.size()}, "a");
-#endif
+    // we create a new hdf5 file
+    HighFive::File file(outFile, HighFive::File::ReadWrite | HighFive::File::Create | HighFive::File::Truncate);
+
+    // let's create a dataset of native integer with the size of the vector 'data'
+    HighFive::DataSet dataset_vec1 = file.createDataSet<unsigned>("/src",  HighFive::DataSpace::From(src));
+    HighFive::DataSet dataset_vec2 = file.createDataSet<unsigned>("/dst",  HighFive::DataSpace::From(dst));
+
 
     t0 = std::chrono::high_resolution_clock::now();
-    //now write to an npz file
-    cnpy::npz_save(outFile.string(), "src", src, "w"); // "w" overwrites any existing file
-    cnpy::npz_save(outFile.string(), "dst", dst, "a"); // "a" appends to the file we created above
+    //now write them to an hdf5 file
+    dataset_vec1.write(src);
+    dataset_vec2.write(dst);
     ts = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - t0);
     std::cout << "Writing output file took time: " << ts.count() << " sec" << std::endl;
 
-#if(0)
-    cnpy::NpyArray src2 = cnpy::npz_load(outFile.string(), "src");
-
-    //load the entire npz file
-    cnpy::npz_t fl_npz = cnpy::npz_load(outFile.string());
-#endif
 
     return EXIT_SUCCESS;
 }
