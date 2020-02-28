@@ -2,16 +2,8 @@
 #include<iostream>
 #include <fstream>
 #include <vector>
-
-// Standard filesystem support
-#if __cplusplus >= 201703L // C++17 support is available
-#include <filesystem>
-namespace fs = std::filesystem;
-#else
-static_assert(__cplusplus >= 201402L, "C++14 at least is required.") // C++14 support
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#endif
+#include <chrono>
+#include <string>
 
 
 #include <boost/serialization/vector.hpp>
@@ -21,16 +13,15 @@ namespace fs = std::experimental::filesystem;
 
 int main(int argc, char** argv)
 {
-    if(argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <file.ser>" << std::endl;
+    if(argc < 3) {
+        std::cerr << "Usage: " << argv[0] << " <file.ser> <file.npz>" << std::endl;
         return EXIT_FAILURE;
     }
 
     using EdgeCount = uint64_t;
 
-    std::filesystem::path inFile(argv[1]);
-    std::filesystem::path outFile(argv[1]);
-    outFile.replace_extension(".npz");
+    std::string inFile(argv[1]);
+    std::string outFile(argv[2]);
 
 
     std::ifstream ifs;
@@ -40,7 +31,7 @@ int main(int argc, char** argv)
     boost::archive::binary_iarchive bi(ifs);
 
     std::vector<EdgeCount> src, dst;
-    std::cout << "Reading binary input file: " << inFile.filename().string() << std::endl;
+    std::cout << "Reading binary input file: " << inFile << std::endl;
     auto t0 = std::chrono::high_resolution_clock::now();
     bi >> src >> dst;
     auto ts = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - t0);
@@ -63,8 +54,8 @@ int main(int argc, char** argv)
 
     t0 = std::chrono::high_resolution_clock::now();
     //now write to an npz file
-    cnpy::npz_save(outFile.string(), "src", src, "w"); // "w" overwrites any existing file
-    cnpy::npz_save(outFile.string(), "dst", dst, "a"); // "a" appends to the file we created above
+    cnpy::npz_save(outFile, "src", src, "w"); // "w" overwrites any existing file
+    cnpy::npz_save(outFile, "dst", dst, "a"); // "a" appends to the file we created above
     ts = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - t0);
     std::cout << "Writing output file took time: " << ts.count() << " sec" << std::endl;
 

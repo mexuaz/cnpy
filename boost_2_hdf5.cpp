@@ -5,16 +5,9 @@
 #include<iostream>
 #include <fstream>
 #include <vector>
+#include <chrono>
+#include <string>
 
-// Standard filesystem support
-#if __cplusplus >= 201703L // C++17 support is available
-#include <filesystem>
-namespace fs = std::filesystem;
-#else
-static_assert(__cplusplus >= 201402L, "C++14 at least is required.") // C++14 support
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#endif
 
 #include <boost/serialization/vector.hpp>
 #include <boost/archive/binary_iarchive.hpp>
@@ -24,16 +17,15 @@ namespace fs = std::experimental::filesystem;
 
 int main(int argc, char** argv)
 {
-    if(argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <file.ser>" << std::endl;
+    if(argc < 3) {
+        std::cerr << "Usage: " << argv[0] << " <file.ser> <file.h5>" << std::endl;
         return EXIT_FAILURE;
     }
 
     using EdgeCount = uint64_t;
 
-    std::filesystem::path inFile(argv[1]);
-    std::filesystem::path outFile(argv[1]);
-    outFile.replace_extension(".h5");
+    std::string inFile(argv[1]);
+    std::string outFile(argv[2]);
 
 
     std::ifstream ifs;
@@ -43,7 +35,7 @@ int main(int argc, char** argv)
     boost::archive::binary_iarchive bi(ifs);
 
     std::vector<EdgeCount> src, dst;
-    std::cout << "Reading binary input file: " << inFile.filename().string() << std::endl;
+    std::cout << "Reading binary input file: " << inFile << std::endl;
     auto t0 = std::chrono::high_resolution_clock::now();
     bi >> src >> dst;
     auto ts = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - t0);
@@ -56,8 +48,8 @@ int main(int argc, char** argv)
     HighFive::File file(outFile, HighFive::File::ReadWrite | HighFive::File::Create | HighFive::File::Truncate);
 
     // let's create a dataset of native integer with the size of the vector 'data'
-    HighFive::DataSet dataset_vec1 = file.createDataSet<unsigned>("/src",  HighFive::DataSpace::From(src));
-    HighFive::DataSet dataset_vec2 = file.createDataSet<unsigned>("/dst",  HighFive::DataSpace::From(dst));
+    HighFive::DataSet dataset_vec1 = file.createDataSet<EdgeCount>("/src",  HighFive::DataSpace::From(src));
+    HighFive::DataSet dataset_vec2 = file.createDataSet<EdgeCount>("/dst",  HighFive::DataSpace::From(dst));
 
 
     t0 = std::chrono::high_resolution_clock::now();
