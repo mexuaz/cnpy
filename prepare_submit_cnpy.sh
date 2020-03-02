@@ -14,7 +14,8 @@ else
     git clone git@github.com:mexuaz/cnpy
 fi
 
-module load gcc/9.1.0 tbb/2018_U5 cmake/3.12.3 boost/1.68.0
+module --force purge
+module load gcc/9.1.0 cmake/3.12.3 boost/1.68.0
 
 if [[ -d "$BINDIR" ]]
 then
