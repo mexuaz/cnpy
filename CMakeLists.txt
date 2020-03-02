@@ -59,6 +59,6 @@ target_link_libraries(boost_2_hdf5 ${Boost_LIBRARIES})
 target_link_libraries(boost_2_hdf5 ${HDF5_CXX_LIBRARIES} ${HDF5_LIBRARIES})
 
 add_executable(graph_multi_cvt graph_multi_cvt.cpp)
-#target_link_libraries(graph_multi_cvt cnpy)
+target_link_libraries(graph_multi_cvt cnpy)
 target_link_libraries(graph_multi_cvt ${Boost_LIBRARIES})
 target_link_libraries(graph_multi_cvt ${HDF5_CXX_LIBRARIES} ${HDF5_LIBRARIES})
