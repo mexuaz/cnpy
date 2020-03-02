@@ -3,9 +3,22 @@ if(COMMAND cmake_policy)
 	cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
+set(CMAKE_C_COMPILER "gcc-9")
+set(CMAKE_CXX_COMPILER "g++-9")
+
+
+
+
 project(CNPY)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+
+
+message( "C++ compiler version: " ${CMAKE_CXX_COMPILER_VERSION} )
+
+if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS "9.0.0")
+    message(FATAL_ERROR "Require at least gcc-9.0.0")
+endif()
 
 option(ENABLE_STATIC "Build static (.a) library" ON)
 
@@ -53,3 +66,8 @@ target_link_libraries(boost_2_npz ${Boost_LIBRARIES})
 add_executable(boost_2_hdf5 boost_2_hdf5.cpp)
 target_link_libraries(boost_2_hdf5 ${Boost_LIBRARIES})
 target_link_libraries(boost_2_hdf5 ${HDF5_CXX_LIBRARIES} ${HDF5_LIBRARIES})
+
+add_executable(graph_multi_cvt graph_multi_cvt.cpp)
+target_link_libraries(graph_multi_cvt cnpy)
+target_link_libraries(graph_multi_cvt ${Boost_LIBRARIES})
+target_link_libraries(graph_multi_cvt ${HDF5_CXX_LIBRARIES} ${HDF5_LIBRARIES})

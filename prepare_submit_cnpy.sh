@@ -1,13 +1,8 @@
 #!/bin/bash
 
-# usage: prepare_submit_cnpy.sh uk-2005 soc-LiveJournal1 ...
-
 RPODIR="$HOME/cnpy"
 SRCDIR="$RPODIR"
 BINDIR="$HOME/bin-cnpy"
-DATDIR="$SCRATCH"
-PROGRM="$BINDIR/boost_2_npz"
-DATAST=("twitter-2010" "uk-2005" "soc-LiveJournal1" "arabic-2005" "indochina-2004" "amazon")
 
 if [[ -d "$RPODIR" ]]; then
     echo "Syncing repository."

@@ -13,19 +13,19 @@ RPODIR="$HOME/cnpy"
 SRCDIR="$RPODIR"
 BINDIR="$HOME/bin-cnpy"
 DATDIR="$SCRATCH"
-PROGRM="$BINDIR/boost_2_npz"
-DATAST=("twitter-2010" "uk-2005" "soc-LiveJournal1" "arabic-2005" "indochina-2004" "amazon")
+PROGRM="$BINDIR/graph_multi_cvt"
+DATAST=("hollywood-2009" "hollywood-2011" "eu-2015-tpd")
 
 cd "$DATDIR"
 
 if [ $# -eq 0 ]; then
     for arg in ${DATAST[*]}; do
-	echo "Converting $arg dataset to npy format ..."
-        $PROGRM "$DATDIR/$arg.ser"
+	echo "Converting $arg dataset to other formats ..."
+        $PROGRM "$DATDIR/$arg.txt"
     done
 else
     for arg in "$@"; do
-	echo "Converting $arg dataset to npy format ..."
-        $PROGRM "$DATDIR/$arg.ser"
+	echo "Converting $arg dataset to other formats ..."
+        $PROGRM "$DATDIR/$arg.txt"
     done
 fi

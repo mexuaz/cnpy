@@ -14,6 +14,8 @@ Loading data written in numpy formats into C++ is equally simple, but requires y
 ## Compute Canada 
 
 module load nixpkgs/16.09  intel/2019.3 boost/1.68.0 hdf5/1.10.5
+
+salloc --time=03:00:00 --nodes=1 --ntasks-per-node=4 --mem=64G --account=def-thomo
 module load nixpkgs/16.09  gcc/7.3.0 boost/1.68.0  hdf5/1.10.3
 
 # Installation:
