@@ -3,25 +3,16 @@ if(COMMAND cmake_policy)
 	cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
-#set(CMAKE_C_COMPILER "gcc-9")
-#set(CMAKE_CXX_COMPILER "g++-9")
-
-
-
 
 project(CNPY)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 
 message( "C++ compiler version: " ${CMAKE_CXX_COMPILER_VERSION} )
-
-#if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS "9.0.0")
-#    message(FATAL_ERROR "Require at least gcc-9.0.0")
-#endif()
+message( "C++ standard version: " ${CMAKE_CXX_STANDARD} )
 
 option(ENABLE_STATIC "Build static (.a) library" ON)
 
