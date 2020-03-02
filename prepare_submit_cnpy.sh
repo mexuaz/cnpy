@@ -25,7 +25,7 @@ fi
 mkdir "$BINDIR"
 cd "$BINDIR"
 cmake "$SRCDIR"
-make
+make graph_multi_cvt
 
 cd $SCRATCH
 sbatch "$SRCDIR/cnpy.sh"
