@@ -13,6 +13,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 message( "C++ compiler version: " ${CMAKE_CXX_COMPILER_VERSION} )
 message( "C++ standard version: " ${CMAKE_CXX_STANDARD} )
+message( "C standard version: " ${CMAKE_C_STANDARD} )
 
 option(ENABLE_STATIC "Build static (.a) library" ON)
 
