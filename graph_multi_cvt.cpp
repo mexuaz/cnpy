@@ -1,7 +1,7 @@
 #include "highfive/H5File.hpp"
 #include "highfive/H5DataSet.hpp"
 
-#include"cnpy.h"
+//#include"cnpy.h"
 
 #include<iostream>
 #include <fstream>
@@ -125,6 +125,7 @@ void serialize_hdf5(const string& filename,
     dataset_vec2.write(dst);
 }
 
+/*
 template <typename T>
 void serialize_npz(const string& filename,
                const vector<T>& src,
@@ -133,7 +134,7 @@ void serialize_npz(const string& filename,
     cnpy::npz_save(filename, "src", src, "w"); // "w" overwrites any existing file
     cnpy::npz_save(filename, "dst", dst, "a"); // "a" appends to the file we created above
 }
-
+*/
 
 int main(int argc, char** argv)
 {
@@ -178,10 +179,12 @@ int main(int argc, char** argv)
     std::cout << "Writing hdf5 file took time: " << ts.count() << " sec" << std::endl;
 
 
+/*
     t0 = std::chrono::high_resolution_clock::now();
     serialize_npz<EdgeCount>(inFile.substr(0, inFile.find_last_of("."))+".npz", src, dst);
     ts = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - t0);
     std::cout << "Writing npz file took time: " << ts.count() << " sec" << std::endl;
+*/
 
     return EXIT_SUCCESS;
 }
