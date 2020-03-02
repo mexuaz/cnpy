@@ -15,7 +15,7 @@ else
 fi
 
 module --force purge
-module load nixpkgs/16.09 gcc/9.1.0 cmake/3.12.3 boost/1.68.0
+module load nixpkgs/16.09 gcc/9.1.0 cmake/3.12.3 boost/1.68.0 hdf5/1.10.3
 
 if [[ -d "$BINDIR" ]]
 then

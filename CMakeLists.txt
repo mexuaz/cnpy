@@ -1,7 +1,4 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.0 FATAL_ERROR)
-if(COMMAND cmake_policy)
-	cmake_policy(SET CMP0003 NEW)
-endif(COMMAND cmake_policy)
 
 
 project(CNPY)
@@ -13,7 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 message( "C++ compiler version: " ${CMAKE_CXX_COMPILER_VERSION} )
 message( "C++ standard version: " ${CMAKE_CXX_STANDARD} )
-message( "C standard version: " ${CMAKE_C_STANDARD} )
+
 
 option(ENABLE_STATIC "Build static (.a) library" ON)
 
@@ -46,7 +43,6 @@ include_directories( ${Boost_INCLUDE_DIR} )
 
 
 # add hdf5 library
-
 find_package(HDF5 REQUIRED COMPONENTS C CXX)
 include_directories(${HDF5_INCLUDE_DIR})
 
